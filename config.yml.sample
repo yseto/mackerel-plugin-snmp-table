@@ -1,0 +1,36 @@
+mib:
+  directory:
+    - "/var/lib/snmp/mibs/ietf/"
+  modules:
+    # - SNMPv2-MIB
+    - IF-MIB
+target:
+  ipaddress: "192.0.2.1"
+  community: public
+  # oid: IF-MIB::ifTable
+  oid: ".1.3.6.1.2.1.2.2"
+metric:
+  - prefix: "octets.{{.MetricValue}}"
+    key: "{{.ifDescr}}"
+    value:
+      - name: ifInOctets
+        diff: true
+        unit: integer
+        label: ifInOctets
+      - name: ifOutOctets
+        diff: true
+        unit: integer
+        label: ifOutOctets
+  - prefix: "pkts.{{.MetricValue}}"
+    key: "{{.ifDescr}}"
+    value:
+      - name: ifInUcastPkts
+        diff: true
+        unit: integer
+        label: ifInUcastPkts
+      - name: ifOutUcastPkts
+        diff: true
+        unit: integer
+        label: ifOutUcastPkts
+
+#prefix: "snmp-table"
